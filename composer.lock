@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d68e029b90c2b2d049dae19921f53eb8",
+    "content-hash": "8dcb9fb34043a6f39729eadfbf2ff2d5",
     "packages": [
         {
             "name": "phpcq/plugin-api",
-            "version": "dev-master",
+            "version": "dev-feature/exec-interface",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpcq/plugin-api.git",
-                "reference": "41a171cb56b3200881fe569c705dadd6de565bfd"
+                "reference": "621d91717a01ed1b27e964409293c29ab8fa0671"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpcq/plugin-api/zipball/41a171cb56b3200881fe569c705dadd6de565bfd",
-                "reference": "41a171cb56b3200881fe569c705dadd6de565bfd",
+                "url": "https://api.github.com/repos/phpcq/plugin-api/zipball/621d91717a01ed1b27e964409293c29ab8fa0671",
+                "reference": "621d91717a01ed1b27e964409293c29ab8fa0671",
                 "shasum": ""
             },
             "require": {
@@ -27,7 +27,6 @@
             "require-dev": {
                 "phpcq/runner-bootstrap": "^1.0@dev"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -60,7 +59,7 @@
             "description": "PHP code quality project plugin API interfaces.",
             "support": {
                 "issues": "https://github.com/phpcq/plugin-api/issues",
-                "source": "https://github.com/phpcq/plugin-api/tree/master"
+                "source": "https://github.com/phpcq/plugin-api/tree/feature/exec-interface"
             },
             "funding": [
                 {
@@ -72,7 +71,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-25T09:14:32+00:00"
+            "time": "2021-12-04T10:07:34+00:00"
         }
     ],
     "packages-dev": [
@@ -205,8 +204,9 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3 || ^8.0"
+        "php": "^7.3 || ^8.0",
+        "ext-pcre": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
