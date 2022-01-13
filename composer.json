@@ -1,8 +1,8 @@
 {
   "name": "phpcq/plugin-phpcs",
-  "type": "phpcq-plugin",
   "description": "phpcs/phpcbf plugin for phpcq.",
   "license": "MIT",
+  "type": "phpcq-plugin",
   "authors": [
     {
       "name": "Christian Schiffler",
