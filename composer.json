@@ -20,7 +20,7 @@
   "require": {
     "php": "^7.3 || ^8.0",
     "ext-pcre": "*",
-    "phpcq/plugin-api": "dev-feature/exec-interface"
+    "phpcq/plugin-api": "^1.0@dev"
   },
   "require-dev": {
     "phpcq/runner-bootstrap": "^1.0@dev",
