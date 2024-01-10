@@ -14,7 +14,7 @@
         "sources": [
           {
             "type": "github",
-            "repository": "squizlabs/PHP_CodeSniffer"
+            "repository": "PHPCSStandards/PHP_CodeSniffer"
           }
         ]
       },
@@ -23,7 +23,7 @@
         "sources": [
           {
             "type": "github",
-            "repository": "squizlabs/PHP_CodeSniffer"
+            "repository": "PHPCSStandards/PHP_CodeSniffer"
           }
         ]
       }
