@@ -8,7 +8,13 @@ use Phpcq\PluginApi\Version10\Configuration\PluginConfigurationBuilderInterface;
 use Phpcq\PluginApi\Version10\Configuration\PluginConfigurationInterface;
 use Phpcq\PluginApi\Version10\DiagnosticsPluginInterface;
 use Phpcq\PluginApi\Version10\EnvironmentInterface;
+use Phpcq\PluginApi\Version10\ProjectConfigInterface;
+use Phpcq\PluginApi\Version10\Task\TaskInterface;
 use PHPUnit\Framework\TestCase;
+
+use function dirname;
+use function sys_get_temp_dir;
+use function tempnam;
 
 /**
  * @coversNothing
@@ -42,7 +48,39 @@ final class PhpcsPluginTest extends TestCase
 
         $this->instantiate()->createDiagnosticTasks($config, $environment);
 
-        // We assume it worked out as the plugin did execute correctly.
-        $this->addToAssertionCount(1);
+        foreach ($this->instantiate()->createDiagnosticTasks($config, $environment) as $task) {
+            $this->assertInstanceOf(TaskInterface::class, $task);
+        }
+    }
+
+    public function testConfigureAutoloadPaths(): void
+    {
+        $config = $this->getMockForAbstractClass(PluginConfigurationInterface::class);
+        $config->method('has')->willReturnCallback(static function (string $key) {
+            if ($key === 'autoload_paths') {
+                return true;
+            }
+
+            return false;
+        });
+
+        $config->method('getStringList')->willReturnCallback(static function (string $key): array {
+            if ($key === 'autoload_paths') {
+                return ['autoload.php'];
+            }
+
+            return [];
+        });
+
+        $configuration = $this->getMockForAbstractClass(ProjectConfigInterface::class);
+        $configuration->method('getProjectRootPath')->willReturn(__DIR__ . '/fixtures');
+
+        $environment = $this->getMockForAbstractClass(EnvironmentInterface::class);
+        $environment->method('getUniqueTempFile')->willReturn(tempnam(sys_get_temp_dir(), 'phpcq-phpcs'));
+        $environment->method('getProjectConfiguration')->willReturn($configuration);
+
+        foreach ($this->instantiate()->createDiagnosticTasks($config, $environment) as $task) {
+            $this->assertInstanceOf(TaskInterface::class, $task);
+        }
     }
 }

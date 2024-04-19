@@ -41,26 +41,32 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
         $configOptionsBuilder
             ->describeStringListOption(
                 'standard_paths',
-                'Setting the installed standard paths as relative path to the project root dir.'
+                'Setting the installed standard paths as relative path to the project root dir.',
             )
             ->isRequired()
             ->withDefaultValue([]);
         $configOptionsBuilder
             ->describeBoolOption(
                 'fix',
-                'If given, the source will be fixed automatically with phpcbf'
+                'If given, the source will be fixed automatically with phpcbf',
             )
             ->isRequired()
             ->withDefaultValue(false);
         $configOptionsBuilder
             ->describeStringListOption(
                 'excluded',
-                'List of excluded paths.'
+                'List of excluded paths.',
             );
         $configOptionsBuilder
             ->describeStringListOption(
                 'excluded_sniffs',
-                'List of excluded sniffs.'
+                'List of excluded sniffs.',
+            );
+
+        $configOptionsBuilder
+            ->describeStringListOption(
+                'autoload_paths',
+                'List of files to autoload relative to project directory',
             );
     }
 
@@ -127,7 +133,7 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
                 function ($path) use ($projectPath): string {
                     return realpath($projectPath . '/' . $path);
                 },
-                $standardPaths
+                $standardPaths,
             ));
         }
 
@@ -135,6 +141,33 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
         if (null !== $tempFile) {
             $arguments[] = '--report=checkstyle';
             $arguments[] = '--report-file=' . $tempFile;
+        }
+
+        if ($config->has('autoload_paths')) {
+            $template = <<<'PHP'
+<?php 
+declare(strict_types=1);
+
+foreach (%s as $path) {
+    require_once $path;
+}
+PHP;
+            $tmpFile = $environment->getUniqueTempFile($this, 'phpcs.bootstrap.php');
+            $paths   = array_unique(
+                array_map(
+                    function (string $path) use ($environment): string {
+                        $file = $environment->getProjectConfiguration()->getProjectRootPath() . '/' . $path;
+                        if (! file_exists($file)) {
+                            throw new RuntimeException('Autoload file does not exist: ' . $file);
+                        }
+
+                        return $environment->getProjectConfiguration()->getProjectRootPath() . '/' . $path;
+                    },
+                    $config->getStringList('autoload_paths')
+                ),
+            );
+            file_put_contents($tmpFile, sprintf($template, var_export($paths, true)));
+            $arguments[] = '--bootstrap=' . $tmpFile;
         }
 
         return array_merge($arguments, $config->getStringList('directories'));
@@ -149,14 +182,14 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
             'phpcs',
             'PHP CodeSniffer by Squiz (http://www.squiz.net)',
             $definitionBuilder,
-            $environment
+            $environment,
         );
         $this->describeApplication(
             'phpcbf',
             'PHP Code Beautifier and Fixer',
             $definitionBuilder,
             $environment,
-            'fix'
+            'fix',
         );
     }
 
