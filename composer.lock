@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27554af9a47ed715f20733e0a698d01e",
+    "content-hash": "30c4048341293d3f006a1e60d50a1d2b",
     "packages": [
         {
             "name": "phpcq/plugin-api",
-            "version": "dev-master",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpcq/plugin-api.git",
-                "reference": "afc5a467fcca3d4ac1bc39587b7b9f0a4e45a3ab"
+                "reference": "5cdbbbcea41191533e8c2bee4a61a73d731df0bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpcq/plugin-api/zipball/afc5a467fcca3d4ac1bc39587b7b9f0a4e45a3ab",
-                "reference": "afc5a467fcca3d4ac1bc39587b7b9f0a4e45a3ab",
+                "url": "https://api.github.com/repos/phpcq/plugin-api/zipball/5cdbbbcea41191533e8c2bee4a61a73d731df0bb",
+                "reference": "5cdbbbcea41191533e8c2bee4a61a73d731df0bb",
                 "shasum": ""
             },
             "require": {
@@ -27,7 +27,6 @@
             "require-dev": {
                 "phpcq/runner-bootstrap": "^1.0@dev"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -60,7 +59,7 @@
             "description": "PHP code quality project plugin API interfaces.",
             "support": {
                 "issues": "https://github.com/phpcq/plugin-api/issues",
-                "source": "https://github.com/phpcq/plugin-api/tree/master"
+                "source": "https://github.com/phpcq/plugin-api/tree/1.0.3"
             },
             "funding": [
                 {
@@ -72,7 +71,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-13T10:56:37+00:00"
+            "time": "2024-03-21T08:35:42+00:00"
         }
     ],
     "packages-dev": [
@@ -82,12 +81,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpcq/runner-bootstrap.git",
-                "reference": "f0664b84c7324e2d41d653939ad3bf4f97aaf06f"
+                "reference": "aa201ff5719ddc2aad060b6a4b0689bacbca37c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpcq/runner-bootstrap/zipball/f0664b84c7324e2d41d653939ad3bf4f97aaf06f",
-                "reference": "f0664b84c7324e2d41d653939ad3bf4f97aaf06f",
+                "url": "https://api.github.com/repos/phpcq/runner-bootstrap/zipball/aa201ff5719ddc2aad060b6a4b0689bacbca37c6",
+                "reference": "aa201ff5719ddc2aad060b6a4b0689bacbca37c6",
                 "shasum": ""
             },
             "require": {
@@ -136,11 +135,11 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-08T18:33:27+00:00"
+            "time": "2022-01-21T11:15:13+00:00"
         },
         {
             "name": "phpcq/schema",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpcq/schema.git",
@@ -152,7 +151,6 @@
                 "reference": "3c0ce7ec8e4399b4800b418efe9300210c253cbe",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -198,16 +196,14 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phpcq/plugin-api": 20,
-        "phpcq/runner-bootstrap": 20,
-        "phpcq/schema": 20
+        "phpcq/runner-bootstrap": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3 || ^8.0",
+        "php": "^7.4 || ^8.0",
         "ext-pcre": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
