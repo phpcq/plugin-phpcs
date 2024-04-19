@@ -205,7 +205,7 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
             /** @var array<string,string> */
             private $descriptions = [];
 
-            /** @var array<string,array{description:string, short?: bool, paramName?: string|null}> */
+            /** @var array<string,array{description:string, short?: bool, paramName?: string|null, keyValue?: bool}> */
             private $options = [];
 
             /** @var array<string,string> */
@@ -279,7 +279,8 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
                         $definition->withShortcutOnly();
                     }
 
-                    if ($config['paramName'] ?? null) {
+                    if (($config['paramName'] ?? null) !== null) {
+                        /** @psalm-suppress PossiblyUndefinedArrayOffset */
                         $definition->withRequiredValue($config['paramName']);
                     }
 
@@ -352,7 +353,6 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
                     }
 
                     if (null !== $currentName) {
-                        assert(is_string($currentName));
                         $this->options[$currentName]['short'] = true;
                         $this->options[$currentName]['description'] = $currentDescription;
                     }
@@ -362,7 +362,6 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
                 }
 
                 if ($currentName !== null) {
-                    assert(is_string($currentName));
                     $this->options[$currentName]['short'] = true;
                     $this->options[$currentName]['description'] = $currentDescription;
                 }
@@ -376,8 +375,11 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
 
                 foreach ($lines as $line) {
                     preg_match('#^\s+(--[a-z-]*)?\s+(.*)$#', $line, $matches);
+                    if ($matches === []) {
+                        continue;
+                    }
 
-                    if ($matches[1] === '' || $matches[1] === null) {
+                    if ($matches[1] === '') {
                         $currentDescription .= ' ' . trim($matches[2]);
                         continue;
                     }
