@@ -141,7 +141,7 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
             ));
         }
 
-        $arguments[] = '--parallel=' . ((int) $environment->getAvailableThreads());
+        $arguments[] = '--parallel=' . ((string) $environment->getAvailableThreads());
         if (null !== $tempFile) {
             $arguments[] = '--report=checkstyle';
             $arguments[] = '--report-file=' . $tempFile;
