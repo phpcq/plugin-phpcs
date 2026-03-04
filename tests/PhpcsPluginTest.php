@@ -33,7 +33,7 @@ final class PhpcsPluginTest extends TestCase
 
     public function testPluginDescribesConfig(): void
     {
-        $configOptionsBuilder = $this->getMockForAbstractClass(PluginConfigurationBuilderInterface::class);
+        $configOptionsBuilder = $this->createMock(PluginConfigurationBuilderInterface::class);
 
         $this->instantiate()->describeConfiguration($configOptionsBuilder);
 
@@ -43,8 +43,8 @@ final class PhpcsPluginTest extends TestCase
 
     public function testPluginCreatesDiagnosticTasks(): void
     {
-        $config = $this->getMockForAbstractClass(PluginConfigurationInterface::class);
-        $environment = $this->getMockForAbstractClass(EnvironmentInterface::class);
+        $config = $this->createMock(PluginConfigurationInterface::class);
+        $environment = $this->createMock(EnvironmentInterface::class);
 
         $this->instantiate()->createDiagnosticTasks($config, $environment);
 
@@ -55,7 +55,7 @@ final class PhpcsPluginTest extends TestCase
 
     public function testConfigureAutoloadPaths(): void
     {
-        $config = $this->getMockForAbstractClass(PluginConfigurationInterface::class);
+        $config = $this->createMock(PluginConfigurationInterface::class);
         $config->method('has')->willReturnCallback(static function (string $key) {
             if ($key === 'autoload_paths') {
                 return true;
@@ -72,10 +72,10 @@ final class PhpcsPluginTest extends TestCase
             return [];
         });
 
-        $configuration = $this->getMockForAbstractClass(ProjectConfigInterface::class);
+        $configuration = $this->createMock(ProjectConfigInterface::class);
         $configuration->method('getProjectRootPath')->willReturn(__DIR__ . '/fixtures');
 
-        $environment = $this->getMockForAbstractClass(EnvironmentInterface::class);
+        $environment = $this->createMock(EnvironmentInterface::class);
         $environment->method('getUniqueTempFile')->willReturn(tempnam(sys_get_temp_dir(), 'phpcq-phpcs'));
         $environment->method('getProjectConfiguration')->willReturn($configuration);
 
