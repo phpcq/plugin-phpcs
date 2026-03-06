@@ -16,11 +16,13 @@ use Phpcq\PluginApi\Version10\Task\TaskInterface;
 use Phpcq\PluginApi\Version10\Util\CheckstyleReportAppender;
 
 return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
+    #[\Override]
     public function getName(): string
     {
         return 'phpcs';
     }
 
+    #[\Override]
     public function describeConfiguration(PluginConfigurationBuilderInterface $configOptionsBuilder): void
     {
         $configOptionsBuilder->supportDirectories();
@@ -70,6 +72,7 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
             );
     }
 
+    #[\Override]
     public function createDiagnosticTasks(
         PluginConfigurationInterface $config,
         EnvironmentInterface $environment
@@ -131,13 +134,14 @@ return new class implements DiagnosticsPluginInterface, ExecPluginInterface {
             $arguments[] = 'installed_paths';
             $arguments[] = implode(',', array_map(
                 function ($path) use ($projectPath): string {
-                    return realpath($projectPath . '/' . $path);
+                    $resolved = realpath($projectPath . '/' . $path);
+                    return $resolved !== false ? $resolved : $projectPath . '/' . $path;
                 },
                 $standardPaths,
             ));
         }
 
-        $arguments[] = '--parallel=' . $environment->getAvailableThreads();
+        $arguments[] = '--parallel=' . ((string) $environment->getAvailableThreads());
         if (null !== $tempFile) {
             $arguments[] = '--report=checkstyle';
             $arguments[] = '--report-file=' . $tempFile;
@@ -173,6 +177,7 @@ PHP;
         return array_merge($arguments, $config->getStringList('directories'));
     }
 
+    #[\Override]
     public function describeExecTask(
         ExecTaskDefinitionBuilderInterface $definitionBuilder,
         EnvironmentInterface $environment
@@ -193,6 +198,7 @@ PHP;
         );
     }
 
+    #[\Override]
     public function createExecTask(
         ?string $application,
         array $arguments,
@@ -244,6 +250,7 @@ PHP;
             /** @var array<string,string> */
             private $arguments = [];
 
+            #[\Override]
             public function write(
                 string $message,
                 int $verbosity = self::VERBOSITY_NORMAL,
@@ -254,6 +261,7 @@ PHP;
                 }
             }
 
+            #[\Override]
             public function writeln(
                 string $message,
                 int $verbosity = self::VERBOSITY_NORMAL,

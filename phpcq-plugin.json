@@ -10,7 +10,7 @@
     },
     "tool": {
       "phpcs": {
-        "constraints": "^3.0 || ^2.0",
+        "constraints": "^4.0 || ^3.0 || ^2.0",
         "sources": [
           {
             "type": "github",
@@ -19,7 +19,7 @@
         ]
       },
       "phpcbf": {
-        "constraints": "^3.0 || ^2.0",
+        "constraints": "^4.0 || ^3.0 || ^2.0",
         "sources": [
           {
             "type": "github",
